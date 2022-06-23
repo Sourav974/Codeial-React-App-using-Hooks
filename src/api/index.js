@@ -1,11 +1,10 @@
-import { API_URLS, LOCAL_STORAGE_TOKEN_KEY } from '../utils';
+import { API_URLS, LOCAL_STORAGE_TOKEN_KEY, getFormBody } from '../utils';
 
 const customFetch = async (url, { body, ...customConfig }) => {
   const token = window.localStorage.getItem(LOCAL_STORAGE_TOKEN_KEY);
 
   const headers = {
-    'content-type': 'application/json',
-    Accept: 'application/json',
+    'content-type': 'application/x-www-form-urlencoded',
   };
 
   if (token) {
@@ -21,7 +20,7 @@ const customFetch = async (url, { body, ...customConfig }) => {
   };
 
   if (body) {
-    config.body = JSON.stringify(body);
+    config.body = getFormBody(body);
   }
 
   try {

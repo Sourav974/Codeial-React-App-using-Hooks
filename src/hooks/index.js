@@ -1,10 +1,13 @@
-import { useState, useContext } from 'react';
+import { useState, useContext, useEffect } from 'react';
+import jwt from 'jwt-decode';
+
 import { AuthContext } from '../providers/AuthProvider';
 import { login as userLogin } from '../api';
 import {
   setItemInLocalStorage,
   LOCAL_STORAGE_TOKEN_KEY,
   removeItemFromLocalStorage,
+  getItemFromLocalStorage,
 } from '../utils';
 
 export const useAuth = () => {
@@ -14,6 +17,18 @@ export const useAuth = () => {
 export const useProvideAuth = () => {
   const [user, setUser] = useState(null);
   const [loading, setLoading] = useState(true);
+
+  useEffect(() => {
+    const userToken = getItemFromLocalStorage(LOCAL_STORAGE_TOKEN_KEY);
+
+    if (userToken) {
+      const user = jwt(userToken);
+
+      setUser(user);
+    }
+
+    setLoading(false);
+  }, []);
 
   const login = async (email, password) => {
     const response = await userLogin(email, password);

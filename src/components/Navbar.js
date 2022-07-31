@@ -20,13 +20,13 @@ const Navbar = () => {
       <div className={styles.rightNav}>
         {auth.user && (
           <div className={styles.user}>
-            <a href="/">
+            <Link to="/settings">
               <img
                 src="https://cdn-icons.flaticon.com/png/512/560/premium/560277.png?token=exp=1655977629~hmac=083d46bc0ddb3b2de31efa87868a2bce"
                 alt=""
                 className={styles.userDp}
               />
-            </a>
+            </Link>
             <span>{auth.user.name}</span>
           </div>
         )}
